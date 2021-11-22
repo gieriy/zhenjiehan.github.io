@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://zhenjiehan.github.io/</id>
+    <title>猫杰瑞</title>
+    <updated>2021-11-22T12:43:43.828Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://zhenjiehan.github.io/"/>
+    <link rel="self" href="https://zhenjiehan.github.io/atom.xml"/>
+    <subtitle>记录自己的学习之路</subtitle>
+    <logo>https://zhenjiehan.github.io/images/avatar.png</logo>
+    <icon>https://zhenjiehan.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2021, 猫杰瑞</rights>
+    <entry>
+        <title type="html"><![CDATA[字符串常量池]]></title>
+        <id>https://zhenjiehan.github.io/post/字符串常量池/</id>
+        <link href="https://zhenjiehan.github.io/post/字符串常量池/">
+        </link>
+        <updated>2021-11-22T12:28:29.000Z</updated>
+        <summary type="html"><![CDATA[<p>😁</p>
+<p>在 JDK 1.6 中，字符串常量池存在于<strong>永久代</strong>中的常量池中</p>
+<p>在 JDK 1.8 中，字符串常量池存在于<strong>堆</strong>中</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>😁</p>
+<p>在 JDK 1.6 中，字符串常量池存在于<strong>永久代</strong>中的常量池中</p>
+<p>在 JDK 1.8 中，字符串常量池存在于<strong>堆</strong>中</p>
+<!-- more -->
+<p>JVM 在创建字符串对象采用懒加载的机制，当执行到使用到某个字符串的语句时， JVM 才会将已经在常量池中的该字符串生成其对象</p>
+<p><strong>注</strong>：当类编译为字节码文件（.class）后，类中所用到的所有类信息都被固定并保存在字节码文件中，这些类信息包括本类中使用的其他类名，定义的变量，运行时需要用到的字符串（这时仅仅是一个字符串）等等</p>
+<p>普通的 <strong>new String(&quot;abc&quot;)</strong> 会先将 &quot;abc&quot; 存入<strong>常量池</strong>中, 然后再在<strong>堆中</strong>创建一个值为 &quot;abc&quot; 的对象</p>
+<p><strong>字符串拼接</strong></p>
+<hr>
+<pre><code class="language-java">String s = &quot;a&quot; + &quot;b&quot;;
+</code></pre>
+<p>上述代码在 javac 编译时就会进行优化为</p>
+<pre><code class="language-java">String s = &quot;ab&quot;;
+</code></pre>
+<p>故两个语句生成的 .class 文件一致</p>
+<hr>
+<pre><code class="language-java">String sa = &quot;a&quot;;
+String sb = &quot;b&quot;;
+String s = sa + sb;
+</code></pre>
+<p>以上代码会创建一个 StringBuilder 对象, 初始为空串</p>
+<p>从方法区中的变量表中找到 sa</p>
+<p>然后调用其 append 方法进行追加 sa</p>
+<p>这时 StringBuilder 对象为 &quot;a&quot;</p>
+<p>从方法区中的变量表中找到 sb</p>
+<p>然后调用其 append 方法进行追加 sb</p>
+<p>之后 StringBuilder 对象为 &quot;ab&quot;</p>
+<p>最后调用 StringBuilder 的 toString 创建一个新的字符串对象返回</p>
+<p>该 new String(value, 0, count) 不会将其拷贝一份送入字符串常量池</p>
+<pre><code class="language-java">// StringBuilder 中的 toString 方法
+public String toString() {  
+    // Create a copy, don't share the array  
+    return new String(value, 0, count);  
+} 
+</code></pre>
+<p>可以调用 intern 方法将字符串加入字符串常量池</p>
+<ul>
+<li>当字符串常量池中还没有该字符串, 则将其对象加入字符串常量池, 然后返回常量池中的对象引用 (JDK 1.8)</li>
+<li>当字符串常量池中还没有该字符串, 则将其对象复制一份, 将备份加入字符串常量池, 然后返回常量池中的对象引用 (JDK 1.6)</li>
+</ul>
+<pre><code class="language-java">s.intern();
+s == &quot;ab&quot;;// 1.8 true , 1.6 false 此时 &quot;ab&quot; 为常量池中对象
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[彻底理清 hashCode 和 equals 的关系]]></title>
+        <id>https://zhenjiehan.github.io/post/彻底理清hashCode和equals的关系/</id>
+        <link href="https://zhenjiehan.github.io/post/彻底理清hashCode和equals的关系/">
+        </link>
+        <updated>2021-11-22T11:47:43.000Z</updated>
+        <summary type="html"><![CDATA[<p>这篇文章主要是介绍 hashCode 和 equals 之间的关系。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>这篇文章主要是介绍 hashCode 和 equals 之间的关系。</p>
+<!-- more -->
+<p>在此之前，我们应该了解 hashCode  和 equals 的作用分别是什么？</p>
+<h1 id="hashcode">hashCode</h1>
+<p>在 Object 类中 hashCode 的定义如下：</p>
+<pre><code class="language-java">public native int hashCode();
+</code></pre>
+<p>这是一个由 native 修饰的<strong>本地方法</strong>。</p>
+<p>在 Java 中<strong>本地方法</strong>就是由 C / C++ 代码进行功能实现的接口，我们在 jdk 源代码中是看不到其具体实现的细节的。</p>
+<p>该方法在没有被子类重写的默认情况下是返回调用对象在内存堆上的<strong>独特值</strong>，该值可以认为是该对象在内存堆中的身份证号，具有唯一性。</p>
+<p>即使对象属于同一个类，对象内部属性值相同，两者所得该值也不会相同。</p>
+<p>我们定义一个 Student 类：</p>
+<pre><code class="language-java">public class Student {
+    public String name;
+    public int age;
+
+    public Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+}
+</code></pre>
+<p>进行测试</p>
+<pre><code class="language-java">public static void main(String[] args) {
+
+    Student s1 = new Student(&quot;猫弟&quot;,20);
+    Student s2 = new Student(&quot;猫弟&quot;,20);
+    System.out.println(&quot;s1 ==&gt; &quot; + s1.hashCode());
+    System.out.println(&quot;s2 ==&gt; &quot; + s2.hashCode());
+}
+</code></pre>
+<p>可得到结果</p>
+<pre><code class="language-text">s1 ==&gt; 1846274136
+s2 ==&gt; 1639705018
+</code></pre>
+<p>在此，我们还未重写 hashCode 方法，默认会继承并调用 Object 类中 hashCode 方法。</p>
+<p>当然，计算机科学家们搞出这个哈希值概念不是为了让我们懵逼的，哈希值的优势在于可以利用它来迅速的查找某个对象。</p>
+<p>但在一般情况下我们调用 Object 类中的 hashCode 方法是没有实际使用意义的，因为它是根据对象在内存堆中的内存地址来计算得出的一个唯一的值。</p>
+<p>我们更在意的是对象中存储的属性值内容，在一些应用方面，例如在 HashMap 中存储元素的时候，当我们插入一个 key-value 值的时候，程序应该能自动判断插入的 key 值是否存在。</p>
+<p>由于源码设计，hashMap 会调用 key 的 hashCode 方法计算得出 <strong>哈希值</strong>，如果此时 key 所属类没有重写 hashCode 方法，那么默认调用 Object 中的 hashCode 方法。</p>
+<p>这样导致的结果是每一个不同 key 对象所得哈希值无论何时都不会相同，HashMap 会认为每个 key 都不相同，此时类似于 HashMap 这种基于哈希值的散列表（哈希表）也就没有其存在的意义了。</p>
+<p>所以重写 hashCode 方法主要是为了让程序以对象中属性值为根据计算出一个哈希值，我们为上述 Student 类添加上hashCode 方法。</p>
+<pre><code class="language-java">@Override
+public int hashCode() {
+    return Objects.hash(name, age);
+}
+</code></pre>
+<p>该方法会调用 Arrays 工具类中的 hashCode 方法，大家有兴趣可以进源码看一下。</p>
+<p>当然，hashCode 毕竟是通过属性值经过一系列计算得到的，那么就可能存在不同对象计算出了哈希值相同的情况（类似于 8 + 7 == 6 + 5 + 4），这种情况被称作<strong>哈希碰撞</strong>（哈希冲突），优秀的哈希算法会尽量减少哈希碰撞的发生。</p>
+<p>至此，我们只需要知道重写 hashCode 方法是为了类对象产生<strong>以属性为根据的哈希值</strong>就可以了。在散列表中，计算出的哈希值是判断两对象是否相同（根据属性）的第一道屏障。</p>
+<h1 id="equals">equals</h1>
+<p>对于 equals 方法，在 Object 类中定义如下</p>
+<pre><code class="language-java">public boolean equals(Object obj) {
+    return (this == obj);
+}
+</code></pre>
+<p>默认使用 == 比较调用对象和参数对象在内存中的地址值，只要两个对象的引用指向的不是同一个对象，那么该方法返回值一直为 false。</p>
+<p>重写 equals 方法的目的是当产生哈希冲突时，我们可以进一步利用 equals 来对比对象属性内容是否确实相同。如果不同，认为是不同对象；如果相同，认为是同一对象。</p>
+<h1 id="总结">总结</h1>
+<p>那么到这有小伙伴要说，这样不是只需要一个 equals 方法就行了吗？</p>
+<p>先说结论，hashCode 和 equals 只有在散列表（哈希表）中才能相辅相成，发挥作用。</p>
+<p>一般情况下，两个方法没有任何关系。如果我们只需要对比两个对象内容是否相同，调用 equals 即可。</p>
+<p>但在散列表中，我们需要基于 hashCode 算出元素要插入的数组下标，如果该下标下已经有值，那么说明发生了哈希冲突，这时我们再调用 equals 进行进一步的对比。</p>
+<p>一个规定如下</p>
+<blockquote>
+<p>当 hashCode 不同时，两个对象肯定不同</p>
+</blockquote>
+<blockquote>
+<p>当 hashCode 相同时，需进一步调用 equals 对比</p>
+</blockquote>
+<blockquote>
+<p>当 equals 返回 true 时，两个对象 hashCode 一定相同</p>
+</blockquote>
+<p>所以当我们需要将某一个类的对象存入散列表时（如 HashMap、HashTable 等），hashCode 和 equals 都必须重写。</p>
+]]></content>
+    </entry>
+</feed>
