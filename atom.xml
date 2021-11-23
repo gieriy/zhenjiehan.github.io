@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zhenjiehan.github.io/</id>
     <title>猫杰瑞</title>
-    <updated>2021-11-22T13:45:15.736Z</updated>
+    <updated>2021-11-23T02:20:00.429Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zhenjiehan.github.io/"/>
     <link rel="self" href="https://zhenjiehan.github.io/atom.xml"/>
@@ -10,6 +10,70 @@
     <logo>https://zhenjiehan.github.io/images/avatar.png</logo>
     <icon>https://zhenjiehan.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, 猫杰瑞</rights>
+    <entry>
+        <title type="html"><![CDATA[Maven 配置]]></title>
+        <id>https://zhenjiehan.github.io/post/Maven配置/</id>
+        <link href="https://zhenjiehan.github.io/post/Maven配置/">
+        </link>
+        <updated>2021-11-23T02:17:01.000Z</updated>
+        <summary type="html"><![CDATA[<p>简单 maven 安装配置</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>简单 maven 安装配置</p>
+<!-- more -->
+<h1 id="安装-maven">安装 maven</h1>
+<p>官网下载压缩包解压</p>
+<h2 id="配置-阿里云镜像">配置 阿里云镜像</h2>
+<pre><code>https://maven.aliyun.com/repository/central
+</code></pre>
+<h2 id="添加-bin-到环境变量">添加 bin 到环境变量</h2>
+<p>我的电脑-属性-高级系统设置-环境变量</p>
+<h2 id="maven-简单命令-命令行">maven 简单命令 (命令行)</h2>
+<pre><code class="language-maven">mvn compile  //编译文件 cd 到项目文件 pom.xml 路径
+mvn clean  // 清除
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[版本控制-Git]]></title>
+        <id>https://zhenjiehan.github.io/post/版本控制-Git/</id>
+        <link href="https://zhenjiehan.github.io/post/版本控制-Git/">
+        </link>
+        <updated>2021-11-23T02:08:51.000Z</updated>
+        <summary type="html"><![CDATA[<p>介绍 git 的简单安装及配置</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>介绍 git 的简单安装及配置</p>
+<!-- more -->
+<p>下载 Git 修改安装路径 , 一路默认</p>
+<h2 id="配置-git">配置 Git</h2>
+<pre><code class="language-git">git config --list  //查看配置
+git config --global user.name &quot;名字&quot;
+git config --global user.email &quot;邮箱&quot;
+git config --list  //查看配置是否添加
+
+</code></pre>
+<h2 id="本地管理项目">本地管理项目</h2>
+<p>cd 到项目目录</p>
+<pre><code class="language-git">git init //初始化项目
+git add *
+git status
+git commit -m '备注' 
+</code></pre>
+<h2 id="远程仓库">远程仓库</h2>
+<pre><code>ssh-keygen -t rsa -C &quot;git仓库邮箱&quot; //创建秘钥 连续确认  秘钥配置到 git账号
+git remote add origin https://....git //给远程仓库起一个别名
+git push -u origin master //推送到远程仓库
+</code></pre>
+<h2 id="下载远程仓库目录到本地">下载远程仓库目录到本地</h2>
+<p>复制路径</p>
+<pre><code class="language-git">git clone http://....git
+</code></pre>
+<h2 id="idea-集成-git">IDEA 集成 Git</h2>
+<p>IDEA 中配置 git</p>
+<p>设置中-版本控制-Git-Git可执行文件路径</p>
+<pre><code class="language-txt">D:\Environment\Git\bin\git.exe
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[字符串常量池]]></title>
         <id>https://zhenjiehan.github.io/post/字符串常量池/</id>
