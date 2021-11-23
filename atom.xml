@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zhenjiehan.github.io/</id>
     <title>猫杰瑞</title>
-    <updated>2021-11-23T02:20:30.386Z</updated>
+    <updated>2021-11-23T02:23:52.025Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zhenjiehan.github.io/"/>
     <link rel="self" href="https://zhenjiehan.github.io/atom.xml"/>
@@ -10,6 +10,50 @@
     <logo>https://zhenjiehan.github.io/images/avatar.png</logo>
     <icon>https://zhenjiehan.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, 猫杰瑞</rights>
+    <entry>
+        <title type="html"><![CDATA[数据库-MySQL]]></title>
+        <id>https://zhenjiehan.github.io/post/数据库-MySQL/</id>
+        <link href="https://zhenjiehan.github.io/post/数据库-MySQL/">
+        </link>
+        <updated>2021-11-23T02:21:04.000Z</updated>
+        <summary type="html"><![CDATA[<p>MySQL 数据库的安装和配置</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>MySQL 数据库的安装和配置</p>
+<!-- more -->
+<h2 id="安装-mysql">安装 MySQL</h2>
+<p>下载 MySQL 安装包 zip</p>
+<p>添加 my.ini 文件</p>
+<pre><code class="language-ini">[mysql]
+default-character-set=utf8
+[mysqld]
+port=3306
+basedir=C:\\work\\mysql-8.0.15-winx64   // MySQL 根目录
+max_connections=20
+character-set-server=utf8
+default-storage-engine=INNODB
+</code></pre>
+<p>cd 到 mysql\bin 运行</p>
+<pre><code class="language-sql">mysqld --initialize --console //控制台看 mysql 默认密码
+</code></pre>
+<p>安装服务</p>
+<pre><code class="language-sql">mysqld install
+</code></pre>
+<p>启动服务</p>
+<pre><code class="language-sql">net start mysql
+</code></pre>
+<p>正常进入数据库</p>
+<pre><code class="language-sql">mysql -u root -p //刚才控制台打印的初始密码
+</code></pre>
+<p>修改密码</p>
+<pre><code class="language-sql">alter user root@localhost identified by '新密码'
+</code></pre>
+<p>添加 MySQL\bin 到环境变量</p>
+<h2 id="导入-sql-脚本">导入 sql 脚本</h2>
+<p>进入 MySQL 创建所需数据库</p>
+<pre><code class="language-sql">source d:/路径/*.sql   //左斜线
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Maven 配置]]></title>
         <id>https://zhenjiehan.github.io/post/Maven配置/</id>
