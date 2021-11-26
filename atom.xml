@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zhenjiehan.github.io/</id>
     <title>猫杰瑞</title>
-    <updated>2021-11-24T10:53:19.100Z</updated>
+    <updated>2021-11-26T05:27:17.710Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zhenjiehan.github.io/"/>
     <link rel="self" href="https://zhenjiehan.github.io/atom.xml"/>
@@ -10,6 +10,75 @@
     <logo>https://zhenjiehan.github.io/images/avatar.png</logo>
     <icon>https://zhenjiehan.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, 猫杰瑞</rights>
+    <entry>
+        <title type="html"><![CDATA[摩尔投票法]]></title>
+        <id>https://zhenjiehan.github.io/post/摩尔投票法/</id>
+        <link href="https://zhenjiehan.github.io/post/摩尔投票法/">
+        </link>
+        <updated>2021-11-26T05:09:02.000Z</updated>
+        <summary type="html"><![CDATA[<p>摩尔投票法也被称为极限一换一 ,</p>
+<p>主要用来求某个容器中超过总数一半以上的元素</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>摩尔投票法也被称为极限一换一 ,</p>
+<p>主要用来求某个容器中超过总数一半以上的元素</p>
+<!-- more -->
+<hr>
+<h4 id="剑指-offer-39-数组中出现次数超过一半的数字"><a href="https://leetcode-cn.com/problems/shu-zu-zhong-chu-xian-ci-shu-chao-guo-yi-ban-de-shu-zi-lcof/">剑指 Offer 39. 数组中出现次数超过一半的数字</a></h4>
+<pre><code class="language-text">数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。 
+
+你可以假设数组是非空的，并且给定的数组总是存在多数元素。 
+
+示例 1:
+
+输入: [1, 2, 3, 2, 2, 2, 5, 4, 2]
+输出: 2
+</code></pre>
+<p>其<strong>算法思想</strong>主要在于 , 让数组中的两数进行比较 , 若两数不同 , 则<strong>同归于尽</strong> , 到最后剩下的数便是数组中超过半数的数字</p>
+<p>为此我们可以搭一个擂台 , 让数字进行比较 , 并且记录擂主剩余兵力</p>
+<pre><code class="language-java">int table = 0; //擂台
+int count = 0; //擂主剩余兵力
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://cdn.jsdelivr.net/gh/zhenjiehan/picture/image-20211126130127634.png" alt="image-20211126130127634" loading="lazy"></figure>
+<ul>
+<li>
+<p>擂台没人 , 1 为擂主 , 兵力为 1</p>
+</li>
+<li>
+<p>2 去挑战 , 与 1 同归于尽 , 台上仍为 1 , 但 兵力为 0</p>
+</li>
+<li>
+<p>3 去挑战 , 1 无兵力 , 3 直接为擂主</p>
+</li>
+<li>
+<p>2 去挑战 3 , 同归于尽 , 3 为擂主 , 兵力为 0</p>
+<p>......</p>
+</li>
+</ul>
+<p>​	最后<strong>仍在台上</strong>的即为<strong>超过半数</strong>的数字 (此时 count &gt; 0) , 若 count == 0 , 则该数的数量正好为数组的一半</p>
+<hr>
+<p>最后附上 Java 完整代码</p>
+<pre><code class="language-java">class Solution {
+    public int majorityElement(int[] nums) {
+        int count = 0;
+        int table = 0;
+        for (int i = 0; i &lt; nums.length; i++) {
+            if (count == 0) {
+                table = nums[i];
+                count++;
+                continue;
+            }
+            if (table != nums[i]) {
+                count--;
+            } else {
+                count++;
+            }
+        }
+        return table;
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[数据库-MySQL]]></title>
         <id>https://zhenjiehan.github.io/post/数据库-MySQL/</id>

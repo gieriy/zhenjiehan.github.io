@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<title>Gridea | 猫杰瑞</title>
+<title>摩尔投票法 | 猫杰瑞</title>
 
 <link rel="shortcut icon" href="https://zhenjiehan.github.io//favicon.ico?v=1637904413172">
 
@@ -25,11 +25,11 @@
 
 
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
 </head>
 <body>
 <div class="main gt-bg-theme-color-first">
-    <div class="main-content">
-        <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg">
     <a class="navbar-brand" href="/">
         <img class="user-avatar" src="/images/avatar.png" alt="头像">
         <div class="site-name gt-c-content-color-first">
@@ -97,51 +97,104 @@
     }
 </script>
 
-        <div class="current-tag-container">
-            <h2 class="title gt-c-content-color-first">
-                #Gridea
-            </h2>
-        </div>
-        <div class="post-list-container">
-    <div class="post-inner">
-        
-            <div class="post gt-bg-theme-color-second">
-                <div class="post-left">
-                    <div>
-                        
-                        <a href="https://zhenjiehan.github.io/post/hello-gridea/">
-                            <span class="post-title gt-c-content-color-first">Hello Gridea</span>
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    摩尔投票法
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2021-11-26 13:09:02 ·
+                    </time>
+                    
+                        <a href="https://zhenjiehan.github.io/tag/ORd2NoEeA/" class="post-tags">
+                            # 算法
                         </a>
-                    </div>
-                    <div class="gt-post-content post-abstract gt-c-content-color-second">
-                        👏  欢迎使用 Gridea ！
-✍️  Gridea 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...
-
-                    </div>
-                    <div class="post-info">
-                        <time class="post-time gt-c-content-color-first">
-                            发布于 · 2018-12-12 00:00:00 ·
-                        </time>
-                        
-                            <a href="https://zhenjiehan.github.io/tag/yYb_Cbu08/" class="post-tag">
-                                # Gridea
-                            </a>
-                        
-                    </div>
+                    
+                        <a href="https://zhenjiehan.github.io/tag/Dh9JCiSvFe/" class="post-tags">
+                            # LeetCode
+                        </a>
+                    
                 </div>
-                
-                    <a href="https://zhenjiehan.github.io/post/hello-gridea/" class="post-feature-image"
-                       style="background-image: url('https://zhenjiehan.github.io//post-images/hello-gridea.png')">
-                    </a>
-                
+                <div class="post-content">
+                    <p>摩尔投票法也被称为极限一换一 ,</p>
+<p>主要用来求某个容器中超过总数一半以上的元素</p>
+<!-- more -->
+<hr>
+<h4 id="剑指-offer-39-数组中出现次数超过一半的数字"><a href="https://leetcode-cn.com/problems/shu-zu-zhong-chu-xian-ci-shu-chao-guo-yi-ban-de-shu-zi-lcof/">剑指 Offer 39. 数组中出现次数超过一半的数字</a></h4>
+<pre><code class="language-text">数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。 
+
+你可以假设数组是非空的，并且给定的数组总是存在多数元素。 
+
+示例 1:
+
+输入: [1, 2, 3, 2, 2, 2, 5, 4, 2]
+输出: 2
+</code></pre>
+<p>其<strong>算法思想</strong>主要在于 , 让数组中的两数进行比较 , 若两数不同 , 则<strong>同归于尽</strong> , 到最后剩下的数便是数组中超过半数的数字</p>
+<p>为此我们可以搭一个擂台 , 让数字进行比较 , 并且记录擂主剩余兵力</p>
+<pre><code class="language-java">int table = 0; //擂台
+int count = 0; //擂主剩余兵力
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://cdn.jsdelivr.net/gh/zhenjiehan/picture/image-20211126130127634.png" alt="image-20211126130127634" loading="lazy"></figure>
+<ul>
+<li>
+<p>擂台没人 , 1 为擂主 , 兵力为 1</p>
+</li>
+<li>
+<p>2 去挑战 , 与 1 同归于尽 , 台上仍为 1 , 但 兵力为 0</p>
+</li>
+<li>
+<p>3 去挑战 , 1 无兵力 , 3 直接为擂主</p>
+</li>
+<li>
+<p>2 去挑战 3 , 同归于尽 , 3 为擂主 , 兵力为 0</p>
+<p>......</p>
+</li>
+</ul>
+<p>​	最后<strong>仍在台上</strong>的即为<strong>超过半数</strong>的数字 (此时 count &gt; 0) , 若 count == 0 , 则该数的数量正好为数组的一半</p>
+<hr>
+<p>最后附上 Java 完整代码</p>
+<pre><code class="language-java">class Solution {
+    public int majorityElement(int[] nums) {
+        int count = 0;
+        int table = 0;
+        for (int i = 0; i &lt; nums.length; i++) {
+            if (count == 0) {
+                table = nums[i];
+                count++;
+                continue;
+            }
+            if (table != nums[i]) {
+                count--;
+            } else {
+                count++;
+            }
+        }
+        return table;
+    }
+}
+</code></pre>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zhenjiehan.github.io/post/数据库-MySQL/" class="post-title gt-a-link">
+                    数据库-MySQL
+                </a>
             </div>
         
-    </div>
-</div>
-        <div class="pagination-container">
-    
-    
-</div>
+
+        
+
+        
+
+        
 
         <div class="site-footer gt-c-content-color-first">
     <div class="slogan gt-c-content-color-first">记录自己的学习之路</div>
