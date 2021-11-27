@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zhenjiehan.github.io/</id>
     <title>猫杰瑞</title>
-    <updated>2021-11-26T05:27:17.710Z</updated>
+    <updated>2021-11-27T09:33:41.862Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zhenjiehan.github.io/"/>
     <link rel="self" href="https://zhenjiehan.github.io/atom.xml"/>
@@ -11,15 +11,82 @@
     <icon>https://zhenjiehan.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, 猫杰瑞</rights>
     <entry>
+        <title type="html"><![CDATA[两个链表的第一个公共节点]]></title>
+        <id>https://zhenjiehan.github.io/post/两个链表的第一个公共节点/</id>
+        <link href="https://zhenjiehan.github.io/post/两个链表的第一个公共节点/">
+        </link>
+        <updated>2021-11-26T08:32:17.000Z</updated>
+        <summary type="html"><![CDATA[<h4 id="剑指-offer-52-两个链表的第一个公共节点"><a href="https://leetcode-cn.com/problems/liang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof/">剑指 Offer 52. 两个链表的第一个公共节点</a></h4>
+<ul>
+<li>本题采用的为双指针的思想</li>
+</ul>
+]]></summary>
+        <content type="html"><![CDATA[<h4 id="剑指-offer-52-两个链表的第一个公共节点"><a href="https://leetcode-cn.com/problems/liang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof/">剑指 Offer 52. 两个链表的第一个公共节点</a></h4>
+<ul>
+<li>本题采用的为双指针的思想</li>
+</ul>
+<!-- more -->
+<ul>
+<li>两个指针分别指向两个链表的头结点</li>
+</ul>
+<figure data-type="image" tabindex="1"><img src="https://cdn.jsdelivr.net/gh/zhenjiehan/picture/image-20211126160700285.png" alt="image-20211126160700285" loading="lazy"></figure>
+<ul>
+<li>当两个指针没有指向同一个对象时 , 循环 , 让两个指针向后走一步</li>
+</ul>
+<figure data-type="image" tabindex="2"><img src="https://cdn.jsdelivr.net/gh/zhenjiehan/picture/image-20211126160735986.png" alt="image-20211126160735986" loading="lazy"></figure>
+<ul>
+<li>当某一个 (绿指针) 指向链表的尾部 , 即指向 null 时 , 则证明其所走过的链表较短</li>
+</ul>
+<figure data-type="image" tabindex="3"><img src="https://cdn.jsdelivr.net/gh/zhenjiehan/picture/image-20211126160848184.png" alt="image-20211126160848184" loading="lazy"></figure>
+<ul>
+<li>之后将指向 null 的指针 (绿指针) 指向另一条链表的头结点 (红指针同理)</li>
+</ul>
+<figure data-type="image" tabindex="4"><img src="https://cdn.jsdelivr.net/gh/zhenjiehan/picture/image-20211126160959682.png" alt="image-20211126160959682" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://cdn.jsdelivr.net/gh/zhenjiehan/picture/image-20211126161513083.png" alt="image-20211126161513083" loading="lazy"></figure>
+<p>这时两个指针将会 &quot;同步&quot; 前进 , 终会指向相交节点 , 此时退出循环 , return 两个指针中某一个即可</p>
+<hr>
+<p>其中有一个关键点 , 即我们必须判断指针指向 null 时才让其回头指向另一条链表头结点 , 而不能判断 指针.next == null 这种情况</p>
+<pre><code class="language-java">// 正确
+h1 = h1 == null ? headB : h1.next;
+h2 = h2 == null ? headA : h2.next;
+</code></pre>
+<pre><code class="language-java">// 错误
+h1 = h1.next == null ? headB : h1.next;
+h2 = h2.next == null ? headA : h2.next;
+</code></pre>
+<p>原因在于输入两个本就没有交点的链表时 , 判断 指针.next 这种情况将会产生死循环</p>
+<p>因为判断 指针 == null 可以使两条没有交点的链表同时指向两条链表的尾部 , 即两个指针都为 null , 此时两个指针也判断为相等 , 跳出循环</p>
+<p>return  h1 或 h2 都为 null , 满足题意</p>
+<figure data-type="image" tabindex="6"><img src="https://cdn.jsdelivr.net/gh/zhenjiehan/picture/image-20211126162657004.png" alt="image-20211126162657004" loading="lazy"></figure>
+<hr>
+<p>完整 Java 代码如下 :</p>
+<pre><code class="language-java">public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if (headA == null || headB == null) {
+            return null;
+        }
+        ListNode h1 = headA;
+        ListNode h2 = headB;
+        while (h1 != h2) {
+            h1 = h1 == null ? headB : h1.next;
+            h2 = h2 == null ? headA : h2.next;
+        } 
+        return h1;
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[摩尔投票法]]></title>
         <id>https://zhenjiehan.github.io/post/摩尔投票法/</id>
         <link href="https://zhenjiehan.github.io/post/摩尔投票法/">
         </link>
         <updated>2021-11-26T05:09:02.000Z</updated>
-        <summary type="html"><![CDATA[<p>摩尔投票法也被称为极限一换一 ,</p>
+        <summary type="html"><![CDATA[<p><strong>摩尔投票法</strong>也被称为<strong>极限一换一</strong></p>
 <p>主要用来求某个容器中超过总数一半以上的元素</p>
 ]]></summary>
-        <content type="html"><![CDATA[<p>摩尔投票法也被称为极限一换一 ,</p>
+        <content type="html"><![CDATA[<p><strong>摩尔投票法</strong>也被称为<strong>极限一换一</strong></p>
 <p>主要用来求某个容器中超过总数一半以上的元素</p>
 <!-- more -->
 <hr>
@@ -50,11 +117,11 @@ int count = 0; //擂主剩余兵力
 <p>3 去挑战 , 1 无兵力 , 3 直接为擂主</p>
 </li>
 <li>
-<p>2 去挑战 3 , 同归于尽 , 3 为擂主 , 兵力为 0</p>
+<p>2 去挑战 3 , 同归于尽 , 3 仍为擂主 , 兵力为 0</p>
 <p>......</p>
 </li>
 </ul>
-<p>​	最后<strong>仍在台上</strong>的即为<strong>超过半数</strong>的数字 (此时 count &gt; 0) , 若 count == 0 , 则该数的数量正好为数组的一半</p>
+<p>​最后<strong>仍在台上</strong>的即为<strong>超过半数</strong>的数字 (此时 count &gt; 0) , 若 count == 0 , 则该数的数量正好为数组的一半</p>
 <hr>
 <p>最后附上 Java 完整代码</p>
 <pre><code class="language-java">class Solution {
@@ -129,18 +196,18 @@ default-storage-engine=INNODB
         <link href="https://zhenjiehan.github.io/post/Maven配置/">
         </link>
         <updated>2021-11-23T02:17:01.000Z</updated>
-        <summary type="html"><![CDATA[<p>简单 maven 安装配置</p>
+        <summary type="html"><![CDATA[<p>简单 Maven 安装配置</p>
 ]]></summary>
-        <content type="html"><![CDATA[<p>简单 maven 安装配置</p>
+        <content type="html"><![CDATA[<p>简单 Maven 安装配置</p>
 <!-- more -->
-<h1 id="安装-maven">安装 maven</h1>
+<h1 id="安装-maven">安装 Maven</h1>
 <p>官网下载压缩包解压</p>
 <h2 id="配置-阿里云镜像">配置 阿里云镜像</h2>
 <pre><code>https://maven.aliyun.com/repository/central
 </code></pre>
 <h2 id="添加-bin-到环境变量">添加 bin 到环境变量</h2>
 <p>我的电脑-属性-高级系统设置-环境变量</p>
-<h2 id="maven-简单命令-命令行">maven 简单命令 (命令行)</h2>
+<h2 id="maven-简单命令-命令行">Maven 简单命令 (命令行)</h2>
 <pre><code class="language-maven">mvn compile  //编译文件 cd 到项目文件 pom.xml 路径
 mvn clean  // 清除
 </code></pre>

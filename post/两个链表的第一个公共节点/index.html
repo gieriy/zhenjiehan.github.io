@@ -4,7 +4,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<title>Hello Gridea | 猫杰瑞</title>
+<title>两个链表的第一个公共节点 | 猫杰瑞</title>
 
 <link rel="shortcut icon" href="https://zhenjiehan.github.io//favicon.ico?v=1638005514623">
 
@@ -101,45 +101,89 @@
         <div class="post-detail gt-bg-theme-color-second">
             <article class="gt-post-content">
                 <h2 class="post-title">
-                    Hello Gridea
+                    两个链表的第一个公共节点
                 </h2>
                 <div class="post-info">
                     <time class="post-time gt-c-content-color-first">
-                        · 2018-12-12 00:00:00 ·
+                        · 2021-11-26 16:32:17 ·
                     </time>
                     
-                        <a href="https://zhenjiehan.github.io/tag/yYb_Cbu08/" class="post-tags">
-                            # Gridea
+                        <a href="https://zhenjiehan.github.io/tag/ORd2NoEeA/" class="post-tags">
+                            # 算法
+                        </a>
+                    
+                        <a href="https://zhenjiehan.github.io/tag/Dh9JCiSvFe/" class="post-tags">
+                            # LeetCode
                         </a>
                     
                 </div>
                 <div class="post-content">
-                    <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+                    <h4 id="剑指-offer-52-两个链表的第一个公共节点"><a href="https://leetcode-cn.com/problems/liang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof/">剑指 Offer 52. 两个链表的第一个公共节点</a></h4>
+<ul>
+<li>本题采用的为双指针的思想</li>
+</ul>
 <!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+<ul>
+<li>两个指针分别指向两个链表的头结点</li>
+</ul>
+<figure data-type="image" tabindex="1"><img src="https://cdn.jsdelivr.net/gh/zhenjiehan/picture/image-20211126160700285.png" alt="image-20211126160700285" loading="lazy"></figure>
+<ul>
+<li>当两个指针没有指向同一个对象时 , 循环 , 让两个指针向后走一步</li>
+</ul>
+<figure data-type="image" tabindex="2"><img src="https://cdn.jsdelivr.net/gh/zhenjiehan/picture/image-20211126160735986.png" alt="image-20211126160735986" loading="lazy"></figure>
+<ul>
+<li>当某一个 (绿指针) 指向链表的尾部 , 即指向 null 时 , 则证明其所走过的链表较短</li>
+</ul>
+<figure data-type="image" tabindex="3"><img src="https://cdn.jsdelivr.net/gh/zhenjiehan/picture/image-20211126160848184.png" alt="image-20211126160848184" loading="lazy"></figure>
+<ul>
+<li>之后将指向 null 的指针 (绿指针) 指向另一条链表的头结点 (红指针同理)</li>
+</ul>
+<figure data-type="image" tabindex="4"><img src="https://cdn.jsdelivr.net/gh/zhenjiehan/picture/image-20211126160959682.png" alt="image-20211126160959682" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://cdn.jsdelivr.net/gh/zhenjiehan/picture/image-20211126161513083.png" alt="image-20211126161513083" loading="lazy"></figure>
+<p>这时两个指针将会 &quot;同步&quot; 前进 , 终会指向相交节点 , 此时退出循环 , return 两个指针中某一个即可</p>
+<hr>
+<p>其中有一个关键点 , 即我们必须判断指针指向 null 时才让其回头指向另一条链表头结点 , 而不能判断 指针.next == null 这种情况</p>
+<pre><code class="language-java">// 正确
+h1 = h1 == null ? headB : h1.next;
+h2 = h2 == null ? headA : h2.next;
+</code></pre>
+<pre><code class="language-java">// 错误
+h1 = h1.next == null ? headB : h1.next;
+h2 = h2.next == null ? headA : h2.next;
+</code></pre>
+<p>原因在于输入两个本就没有交点的链表时 , 判断 指针.next 这种情况将会产生死循环</p>
+<p>因为判断 指针 == null 可以使两条没有交点的链表同时指向两条链表的尾部 , 即两个指针都为 null , 此时两个指针也判断为相等 , 跳出循环</p>
+<p>return  h1 或 h2 都为 null , 满足题意</p>
+<figure data-type="image" tabindex="6"><img src="https://cdn.jsdelivr.net/gh/zhenjiehan/picture/image-20211126162657004.png" alt="image-20211126162657004" loading="lazy"></figure>
+<hr>
+<p>完整 Java 代码如下 :</p>
+<pre><code class="language-java">public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if (headA == null || headB == null) {
+            return null;
+        }
+        ListNode h1 = headA;
+        ListNode h2 = headB;
+        while (h1 != h2) {
+            h1 = h1 == null ? headB : h1.next;
+            h2 = h2 == null ? headA : h2.next;
+        } 
+        return h1;
+    }
+}
+</code></pre>
 
                 </div>
             </article>
         </div>
 
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://zhenjiehan.github.io/post/摩尔投票法/" class="post-title gt-a-link">
+                    摩尔投票法
+                </a>
+            </div>
         
 
         
