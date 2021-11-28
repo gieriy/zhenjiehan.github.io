@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zhenjiehan.github.io/</id>
     <title>猫杰瑞</title>
-    <updated>2021-11-27T09:34:46.970Z</updated>
+    <updated>2021-11-28T02:52:03.826Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zhenjiehan.github.io/"/>
     <link rel="self" href="https://zhenjiehan.github.io/atom.xml"/>
@@ -10,6 +10,130 @@
     <logo>https://zhenjiehan.github.io/images/avatar.png</logo>
     <icon>https://zhenjiehan.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, 猫杰瑞</rights>
+    <entry>
+        <title type="html"><![CDATA[二叉搜索树的最近公共祖先I]]></title>
+        <id>https://zhenjiehan.github.io/post/二叉搜索树的最近公共祖先I/</id>
+        <link href="https://zhenjiehan.github.io/post/二叉搜索树的最近公共祖先I/">
+        </link>
+        <updated>2021-11-28T02:46:45.000Z</updated>
+        <summary type="html"><![CDATA[<p>本题为简单 , 因为已规定为二叉搜索树</p>
+<p>首先我们要了解二叉搜索树的定义</p>
+<p>在二叉搜索树中 , 节点<strong>左子树</strong>上节点值<strong>均小于</strong>该节点值 , 而<strong>右子树</strong>上节点值<strong>均大于</strong>该节点值</p>
+<p>并且该题确定树中<strong>各个节点值唯一</strong></p>
+]]></summary>
+        <content type="html"><![CDATA[<p>本题为简单 , 因为已规定为二叉搜索树</p>
+<p>首先我们要了解二叉搜索树的定义</p>
+<p>在二叉搜索树中 , 节点<strong>左子树</strong>上节点值<strong>均小于</strong>该节点值 , 而<strong>右子树</strong>上节点值<strong>均大于</strong>该节点值</p>
+<p>并且该题确定树中<strong>各个节点值唯一</strong></p>
+<!-- more -->
+<hr>
+<h4 id="剑指-offer-68-i-二叉搜索树的最近公共祖先"><a href="https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-zui-jin-gong-gong-zu-xian-lcof/">剑指 Offer 68 - I. 二叉搜索树的最近公共祖先</a></h4>
+<p>祖先很好理解 , 从根节点到某节点<strong>路径上的节点</strong>都为该节点的<strong>祖先</strong></p>
+<p>最近公共祖先 , 见名只义 , 不在赘述</p>
+<p>本题中需要<strong>注意</strong>的是 : 节点本身也是自己的祖先</p>
+<p>结合二叉搜索树性质可知以下几种情况</p>
+<ul>
+<li>p 和 q 的值均小于 root 值 , 则 root 指向 root.left 继续寻找</li>
+<li>p 和 q 的值均大于 root 值 , 则 root 指向 root.right 继续寻找</li>
+<li>p 或 q 中某一个等于 root 值 (p == root || q == root) , 则 root 便是最近公共祖先</li>
+</ul>
+<figure data-type="image" tabindex="1"><img src="https://cdn.jsdelivr.net/gh/zhenjiehan/picture/image-20211127124420708.png" alt="image-20211127124420708" loading="lazy"></figure>
+<hr>
+<h3 id="递归实现"><strong>递归实现</strong></h3>
+<ol>
+<li>递推工作：
+<ul>
+<li>当 p, q 都在 root 的 右子树 中，则开启递归 root.right 并返回</li>
+<li>否则，当 p, q都在 root 的 左子树 中，则开启递归 root.left 并返回</li>
+</ul>
+</li>
+<li>返回值： 最近公共祖先 root</li>
+</ol>
+<p>复杂度分析：</p>
+<ul>
+<li>时间复杂度 O(N) ： 其中 N 为二叉树节点数；每循环一轮排除一层，二叉搜索树的层数最小为 logN （满二叉树），最大为 N （退化为链表）</li>
+<li>空间复杂度 O(N) ： 最差情况下，即树退化为链表时，递归深度达到树的层数 N</li>
+</ul>
+<pre><code class="language-java">//自己首次代码, 繁杂粗糙
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null || (root.left == null &amp;&amp; root.right == null)) {
+            return root;
+        }
+        if (p.val == root.val || q.val == root.val || (p.val &lt; root.val &amp;&amp; q.val &gt; root.val) || (p.val &gt; root.val &amp;&amp; q.val &lt; root.val)) {
+            return root;
+        }
+
+        if (p.val &lt; root.val &amp;&amp; q.val &lt; root.val) {
+            return lowestCommonAncestor(root.left, p, q);
+        }
+        if (p.val &gt; root.val &amp;&amp; q.val &gt; root.val) {
+            return lowestCommonAncestor(root.right, p, q);
+        }
+        return null;
+    }
+}
+</code></pre>
+<pre><code class="language-java">//大佬代码, 简单明了
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root.val &lt; p.val &amp;&amp; root.val &lt; q.val)
+            return lowestCommonAncestor(root.right, p, q);
+        if(root.val &gt; p.val &amp;&amp; root.val &gt; q.val)
+            return lowestCommonAncestor(root.left, p, q);
+        return root;
+    }
+}
+</code></pre>
+<hr>
+<h3 id="迭代实现"><strong>迭代实现</strong></h3>
+<ol>
+<li>
+<p>循环搜索： 当节点 root 为空时跳出</p>
+<ul>
+<li>当 p, q 都在 root 的 右子树 中，则遍历至 root.right</li>
+<li>否则，当 p, q 都在 root 的 左子树 中，则遍历至 root.left</li>
+<li>否则，说明找到了 最近公共祖先 ，跳出</li>
+</ul>
+</li>
+<li>
+<p>返回值： 最近公共祖先 rootroot</p>
+</li>
+</ol>
+<pre><code class="language-java">class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        while(root != null) {
+            if(root.val &lt; p.val &amp;&amp; root.val &lt; q.val) // p,q 都在 root 的右子树中
+                root = root.right; // 遍历至右子节点
+            else if(root.val &gt; p.val &amp;&amp; root.val &gt; q.val) // p,q 都在 root 的左子树中
+                root = root.left; // 遍历至左子节点
+            else break;
+        }
+        return root;
+    }
+}
+</code></pre>
+<p>优化：若可保证 p.val &lt; q.val，则在循环中可减少判断条件</p>
+<pre><code class="language-java">class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(p.val &gt; q.val) { // 保证 p.val &lt; q.val
+            TreeNode tmp = p;
+            p = q;
+            q = tmp;
+        }
+        while(root != null) {
+            if(root.val &lt; p.val) // p,q 都在 root 的右子树中
+                root = root.right; // 遍历至右子节点
+            else if(root.val &gt; q.val) // p,q 都在 root 的左子树中
+                root = root.left; // 遍历至左子节点
+            else break;
+        }
+        return root;
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[两个链表的第一个公共节点]]></title>
         <id>https://zhenjiehan.github.io/post/两个链表的第一个公共节点/</id>
@@ -57,7 +181,7 @@ h2 = h2.next == null ? headA : h2.next;
 <p>原因在于输入两个本就没有交点的链表时 , 判断 指针.next 这种情况将会产生死循环</p>
 <p>因为判断 指针 == null 可以使两条没有交点的链表同时指向两条链表的尾部 , 即两个指针都为 null , 此时两个指针也判断为相等 , 跳出循环</p>
 <p>return  h1 或 h2 都为 null , 满足题意</p>
-<figure data-type="image" tabindex="6"><img src="https://cdn.jsdelivr.net/gh/zhenjiehan/picture/image-20211126162657004.png" alt="image-20211126162657004" loading="lazy"></figure>
+<figure data-type="image" tabindex="6"><img src="https://cdn.jsdelivr.net/gh/zhenjiehan/picture/image-20211128104051976.png" alt="image-20211128104051976" loading="lazy"></figure>
 <hr>
 <p>完整 Java 代码如下 :</p>
 <pre><code class="language-java">public class Solution {
